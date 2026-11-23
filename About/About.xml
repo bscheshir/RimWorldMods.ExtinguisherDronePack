@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Extinguisher Drone Pack (Ранец дрона-огнетушителя)</name>
+	<author>BSCheshir</author>
+	<packageId>BSCheshir.ExtinguisherDronePack</packageId>
+	<supportedVersions>
+		<li>1.6</li>
+		<li>1.7</li>
+	</supportedVersions>
+	<modDependencies>
+		<li>
+			<packageId>Ludeon.RimWorld.Odyssey</packageId>
+			<displayName>Odyssey</displayName>
+		</li>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+		</li>
+		<li>
+			<packageId>rabiosus.extinguisherdrone</packageId>
+			<displayName>Extinguisher Drone</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/3555852714</steamWorkshopUrl>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>Ludeon.RimWorld</li>
+		<li>Ludeon.RimWorld.Odyssey</li>
+		<li>brrainz.harmony</li>
+		<li>rabiosus.extinguisherdrone</li>
+	</loadAfter>
+	<description>
+		<![CDATA[
+Adds a wearable extinguisher drone pack-station.
+- Deploys an extinguisher drone when fire is detected near the wearer. Manual deployment to a target location is also available.
+- Equipped with a built-in micro-fabricator that assembles new extinguisher drones from industrial components (4 per drone).
+- Crafted at the fabrication bench using plasteel and advanced components after researching Firefoam, Hunter drones, and Fabrication.
+
+Добавляет носимый ранец-станцию для дрона-огнетушителя.
+- Запускает дрон-огнетушитель при выявлении пожара возле местоположения носителя. Возможен запуск дрона в указанную точку.
+- Оснащён встроенным микрофабрикатором, который собирает новых дронов-огнетушителей из промышленных компонентов (4 шт. на перезарядку).
+- Создаётся на высокоточном станке из пластали и продвинутых компонентов после изучения технологий «Пожарная пена», «Дроны-охотники» и «Высокоточное производство».
+
+-----------------------------------------
+Supported Languages:
+- [EN] English
+- [RU] Russian / Русский
+-----------------------------------------
+Source Code / Исходный код:
+https://github.com/bscheshir/RimWorldMods.ExtinguisherDronePack
+-----------------------------------------
+
+]]>
+	</description>
+
+</ModMetaData>

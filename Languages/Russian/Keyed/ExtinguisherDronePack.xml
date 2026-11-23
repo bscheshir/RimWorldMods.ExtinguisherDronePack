@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+	<ExtinguisherPack.AutoDeploy>Автозапуск дрона</ExtinguisherPack.AutoDeploy>
+	<ExtinguisherPack.AutoDeploy.Desc>Если включено, ранец автоматически запускает дрон-огнетушитель при обнаружении огня в радиусе {0} клеток вокруг носителя.</ExtinguisherPack.AutoDeploy.Desc>
+
+	<ExtinguisherPack.AutoReload>Автоперезарядка</ExtinguisherPack.AutoReload>
+	<ExtinguisherPack.AutoReload.Desc>Если включено, колонисты будут автоматически перезаряжать этот ранец промышленными компонентами, когда заряд закончится.</ExtinguisherPack.AutoReload.Desc>
+
+	<ExtinguisherPack.Settings.DetectRadius>Радиус обнаружения пожара для автозапуска: {0} кл.</ExtinguisherPack.Settings.DetectRadius>
+	<ExtinguisherPack.Settings.DefaultAutoReload>Автоперезарядка включена по умолчанию</ExtinguisherPack.Settings.DefaultAutoReload>
+	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>Определяет, будет ли у новых ранцев изначально включена автоматическая перезарядка.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
+
+</LanguageData>

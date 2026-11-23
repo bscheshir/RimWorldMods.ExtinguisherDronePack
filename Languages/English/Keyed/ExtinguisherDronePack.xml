@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+	<ExtinguisherPack.AutoDeploy>Auto-deploy drone</ExtinguisherPack.AutoDeploy>
+	<ExtinguisherPack.AutoDeploy.Desc>When enabled, the pack automatically deploys an extinguisher drone if fire is detected within a {0}-cell radius around the wearer.</ExtinguisherPack.AutoDeploy.Desc>
+
+	<ExtinguisherPack.AutoReload>Auto-reload</ExtinguisherPack.AutoReload>
+	<ExtinguisherPack.AutoReload.Desc>When enabled, colonists will automatically reload this pack with industrial components when it is empty.</ExtinguisherPack.AutoReload.Desc>
+
+	<ExtinguisherPack.Settings.DetectRadius>Auto-deploy fire detection radius: {0} cells</ExtinguisherPack.Settings.DetectRadius>
+	<ExtinguisherPack.Settings.DefaultAutoReload>Enable auto-reload by default</ExtinguisherPack.Settings.DefaultAutoReload>
+	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>Determines whether newly crafted or spawned extinguisher packs have auto-reload enabled by default.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
+
+</LanguageData>
