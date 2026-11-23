@@ -7,7 +7,10 @@
 	<ExtinguisherPack.AutoReload>Auto-reload</ExtinguisherPack.AutoReload>
 	<ExtinguisherPack.AutoReload.Desc>When enabled, colonists will automatically reload this pack with industrial components when it is empty.</ExtinguisherPack.AutoReload.Desc>
 
+	<ExtinguisherPack.FabricatingDisabled>Assembling extinguisher drone ({0}s remaining).</ExtinguisherPack.FabricatingDisabled>
+
 	<ExtinguisherPack.Settings.DetectRadius>Auto-deploy fire detection radius: {0} cells</ExtinguisherPack.Settings.DetectRadius>
+	<ExtinguisherPack.Settings.FabricationTime>Drone assembly time after reload: {0}s</ExtinguisherPack.Settings.FabricationTime>
 	<ExtinguisherPack.Settings.DefaultAutoReload>Enable auto-reload by default</ExtinguisherPack.Settings.DefaultAutoReload>
 	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>Determines whether newly crafted or spawned extinguisher packs have auto-reload enabled by default.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
 

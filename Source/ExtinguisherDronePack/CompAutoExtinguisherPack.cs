@@ -24,13 +24,20 @@ namespace ExtinguisherDronePack
         private bool autoDeployEnabled = true;
         private bool autoReloadEnabled = ExtinguisherDronePackSettings.DefaultAutoReload;
         private int lastAutoDeployTick = -ExtinguisherDronePackSettings.AutoDeployCooldownTicks;
+        private ExtinguisherFabricator _fabricator;
 
         private CompApparelReloadable _chargedComp;
-        private CompApparelReloadable ChargedComp => _chargedComp ??= parent.GetComp<CompApparelReloadable>();
+        public CompApparelReloadable ChargedComp => _chargedComp ??= parent.GetComp<CompApparelReloadable>();
 
+        public ExtinguisherFabricator Fabricator => _fabricator ??= new ExtinguisherFabricator(parent);
         private float CurrentDetectRadius => ExtinguisherDronePackMod.Settings?.detectRadius ?? Props.detectRadius;
 
         public bool AutoReloadEnabled => autoReloadEnabled;
+        public bool IsFabricating => Fabricator.IsFabricating;
+        public float FabricationProgress => Fabricator.Progress;
+        public float FabricationSecondsLeft => Fabricator.SecondsLeft;
+        public bool IsVisuallyEmpty => ChargedComp != null && ChargedComp.RemainingCharges <= 0;
+        public Graphic EmptyWorldGraphic => Fabricator.GetEmptyWorldGraphic();
 
         public override void PostPostMake()
         {
@@ -47,11 +54,20 @@ namespace ExtinguisherDronePack
             Scribe_Values.Look(ref autoDeployEnabled, nameof(autoDeployEnabled), true);
             Scribe_Values.Look(ref autoReloadEnabled, nameof(autoReloadEnabled), ExtinguisherDronePackSettings.DefaultAutoReload);
             Scribe_Values.Look(ref lastAutoDeployTick, nameof(lastAutoDeployTick), -ExtinguisherDronePackSettings.AutoDeployCooldownTicks);
+            Fabricator.ExposeData();
+        }
+
+        public override void CompTick()
+        {
+            base.CompTick();
+            Fabricator.Tick(ChargedComp);
         }
 
         public void TickEquipped(Pawn wearer)
         {
-            if (!autoDeployEnabled)
+            Fabricator.Tick(ChargedComp);
+
+            if (!autoDeployEnabled || IsFabricating)
                 return;
 
             if (wearer == null || !wearer.Spawned || wearer.Map == null || wearer.Dead || wearer.Downed)
@@ -67,25 +83,38 @@ namespace ExtinguisherDronePack
                 return;
 
             float radius = CurrentDetectRadius;
-            if (HasActiveDroneNearby(wearer.Position, wearer.Map, radius))
+            if (FireDroneDeployer.HasActiveDroneNearby(wearer.Position, wearer.Map, radius, Props.droneKind))
                 return;
 
-            Thing triggerFire = FindFireNearby(wearer.Position, wearer.Map, radius);
+            Thing triggerFire = FireDroneDeployer.FindFireNearby(wearer.Position, wearer.Map, radius);
             if (triggerFire != null)
             {
-                DeployDroneAuto(wearer, triggerFire);
+                ChargedComp.UsedOnce();
+                lastAutoDeployTick = Find.TickManager.TicksGame;
+                Fabricator.NotifyGraphicsChanged();
+                FireDroneDeployer.SpawnNearWearer(wearer, Props.droneKind, triggerFire);
             }
         }
+
+        public void StartFabrication() => Fabricator.Start(ChargedComp);
+        public void NotifyGraphicsChanged() => Fabricator.NotifyGraphicsChanged();
 
         public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
         {
             foreach (var gizmo in base.CompGetWornGizmosExtra())
             {
-                yield return gizmo;
+                if (IsFabricating && gizmo is Command_VerbTarget verbCmd)
+                {
+                    verbCmd.Disable("ExtinguisherPack.FabricatingDisabled".Translate(FabricationSecondsLeft.ToString("0.0")));
+                    yield return new Gizmo_FabricatingVerbWrapper(verbCmd, this);
+                }
+                else
+                {
+                    yield return gizmo;
+                }
             }
 
-            var apparel = parent as Apparel;
-            var wearer = apparel?.Wearer;
+            var wearer = (parent as Apparel)?.Wearer;
             if (wearer == null || !wearer.IsColonistPlayerControlled)
                 yield break;
 
@@ -115,82 +144,6 @@ namespace ExtinguisherDronePack
                 isActive = () => autoReloadEnabled,
                 toggleAction = () => autoReloadEnabled = !autoReloadEnabled
             };
-        }
-
-        private bool HasActiveDroneNearby(IntVec3 center, Map map, float radius)
-        {
-            if (Props.droneKind == null)
-                return false;
-
-            int numCells = GenRadial.NumCellsInRadius(radius);
-            for (int i = 0; i < numCells; i++)
-            {
-                IntVec3 cell = center + GenRadial.RadialPattern[i];
-                if (!cell.InBounds(map))
-                    continue;
-
-                var thingList = cell.GetThingList(map);
-                for (int j = 0; j < thingList.Count; j++)
-                {
-                    if (thingList[j] is Pawn p && !p.Dead && p.kindDef == Props.droneKind)
-                        return true;
-                }
-            }
-            return false;
-        }
-
-        private Thing FindFireNearby(IntVec3 center, Map map, float radius)
-        {
-            int numCells = GenRadial.NumCellsInRadius(radius);
-            for (int i = 0; i < numCells; i++)
-            {
-                IntVec3 cell = center + GenRadial.RadialPattern[i];
-                if (!cell.InBounds(map))
-                    continue;
-
-                var thingList = cell.GetThingList(map);
-                for (int j = 0; j < thingList.Count; j++)
-                {
-                    Thing t = thingList[j];
-                    if (t is Fire || t.IsBurning())
-                        return t;
-                }
-            }
-            return null;
-        }
-
-        private void DeployDroneAuto(Pawn wearer, Thing triggerFire)
-        {
-            if (Props.droneKind == null || ChargedComp == null || ChargedComp.RemainingCharges <= 0)
-                return;
-
-            ChargedComp.UsedOnce();
-            lastAutoDeployTick = Find.TickManager.TicksGame;
-
-            IntVec3 spawnCell = CellFinder.RandomClosewalkCellNear(
-                wearer.Position,
-                wearer.Map,
-                ExtinguisherDronePackSettings.SpawnSearchRadius,
-                c => c.Standable(wearer.Map)
-            );
-            if (!spawnCell.IsValid)
-                spawnCell = wearer.Position;
-
-            Pawn drone = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
-                Props.droneKind,
-                wearer.Faction,
-                PawnGenerationContext.NonPlayer,
-                forceGenerateNewPawn: true,
-                allowDead: false,
-                allowDowned: false,
-                canGeneratePawnRelations: false,
-                fixedBiologicalAge: 0f,
-                fixedChronologicalAge: 0f
-            ));
-
-            GenSpawn.Spawn(drone, spawnCell, wearer.Map);
-            ExtinguisherDroneInterop.ConfigureDroneForBackpack(drone, triggerFire);
-            EffecterDefOf.Skip_EntryNoDelay?.Spawn(spawnCell, wearer.Map)?.Cleanup();
         }
     }
 }

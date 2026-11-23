@@ -7,7 +7,10 @@
 	<ExtinguisherPack.AutoReload>Автоперезарядка</ExtinguisherPack.AutoReload>
 	<ExtinguisherPack.AutoReload.Desc>Если включено, колонисты будут автоматически перезаряжать этот ранец промышленными компонентами, когда заряд закончится.</ExtinguisherPack.AutoReload.Desc>
 
+	<ExtinguisherPack.FabricatingDisabled>Идёт сборка дрона-огнетушителя (осталось {0} сек.).</ExtinguisherPack.FabricatingDisabled>
+
 	<ExtinguisherPack.Settings.DetectRadius>Радиус обнаружения пожара для автозапуска: {0} кл.</ExtinguisherPack.Settings.DetectRadius>
+	<ExtinguisherPack.Settings.FabricationTime>Время сборки дрона после загрузки компонентов: {0} сек.</ExtinguisherPack.Settings.FabricationTime>
 	<ExtinguisherPack.Settings.DefaultAutoReload>Автоперезарядка включена по умолчанию</ExtinguisherPack.Settings.DefaultAutoReload>
 	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>Определяет, будет ли у новых ранцев изначально включена автоматическая перезарядка.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
 

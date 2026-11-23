@@ -30,7 +30,19 @@ namespace ExtinguisherDronePack
     {
         public static readonly Texture2D IconAutoDeploy = ContentFinder<Texture2D>.Get("Things/Pawn/Drone/ExtinguisherDrone/ExtinguisherDrone_east", true);
         public static readonly Texture2D IconAutoReload = ContentFinder<Texture2D>.Get("UI/AutoChargePack", true);
+        public static readonly Texture2D ProgressFillTex = SolidColorMaterials.NewSolidColorTexture(new Color(0.25f, 0.72f, 0.92f, 0.35f));
+
+        public const string PackTexPathEmpty = "HunterDronePack/Apparel_PackHunter_Extinguisher_Empty";
+
+        public static readonly bool HasEmptyWorldTex = ContentFinder<Texture2D>.Get(PackTexPathEmpty, false) != null;
+        public static readonly bool HasEmptyWornTex = ContentFinder<Texture2D>.Get(PackTexPathEmpty + "_north", false) != null
+                                                    || ContentFinder<Texture2D>.Get(PackTexPathEmpty + "_east", false) != null;
+
+        public static readonly Graphic EmptyPackWorldGraphic = HasEmptyWorldTex
+            ? GraphicDatabase.Get<Graphic_Single>(PackTexPathEmpty, ShaderDatabase.Cutout, new Vector2(0.7f, 0.7f), Color.white)
+            : null;
     }
+
 
     public class ExtinguisherDronePackSettings : ModSettings
     {
@@ -40,15 +52,20 @@ namespace ExtinguisherDronePack
         public const int DefaultCheckInterval = 60;
         public const int SpawnSearchRadius = 2;
         public const int AutoDeployCooldownTicks = 180;
+        public const int DefaultFabricationTicks = 1800; // 30 секунд (60 тиков * 30)
+        public const int MinFabricationTicks = 300;      // 5 секунд
+        public const int MaxFabricationTicks = 7200;     // 120 секунд
         public const bool DefaultAutoReload = true;
 
         public float detectRadius = DefaultDetectRadius;
+        public int fabricationTicks = DefaultFabricationTicks;
         public bool defaultAutoReload = DefaultAutoReload;
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look(ref detectRadius, nameof(detectRadius), DefaultDetectRadius);
+            Scribe_Values.Look(ref fabricationTicks, nameof(fabricationTicks), DefaultFabricationTicks);
             Scribe_Values.Look(ref defaultAutoReload, nameof(defaultAutoReload), DefaultAutoReload);
         }
     }

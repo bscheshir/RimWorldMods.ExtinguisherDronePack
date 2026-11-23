@@ -43,6 +43,7 @@ namespace ExtinguisherDronePack
             if (result && reloadable != null)
             {
                 reloadable.UsedOnce();
+                reloadable.parent?.GetComp<CompAutoExtinguisherPack>()?.NotifyGraphicsChanged();
             }
             return result;
         }

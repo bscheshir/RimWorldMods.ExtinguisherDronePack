@@ -23,6 +23,15 @@ namespace ExtinguisherDronePack
             );
 
             listing.Gap();
+            float fabSeconds = Settings.fabricationTicks / 60f;
+            listing.Label("ExtinguisherPack.Settings.FabricationTime".Translate(fabSeconds.ToString("0.#")));
+            Settings.fabricationTicks = Mathf.RoundToInt(listing.Slider(
+                Settings.fabricationTicks,
+                ExtinguisherDronePackSettings.MinFabricationTicks,
+                ExtinguisherDronePackSettings.MaxFabricationTicks
+            ));
+
+            listing.Gap();
             listing.CheckboxLabeled(
                 "ExtinguisherPack.Settings.DefaultAutoReload".Translate(),
                 ref Settings.defaultAutoReload,
