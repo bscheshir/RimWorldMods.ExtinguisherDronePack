@@ -74,7 +74,7 @@
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<!-- Файлы манифеста About -->
 		<ItemGroup>
-			<AboutFiles Include="About\**\*.*" />
+			<AboutFiles Include="About\**\*.*" Exclude="About\**\*.svg" />
 		</ItemGroup>
 		<Copy SourceFiles="@(AboutFiles)" DestinationFiles="@(AboutFiles->'$(ModFolder)\About\%(RecursiveDir)%(Filename)%(Extension)')" />
 
@@ -92,7 +92,7 @@
 
 		<!-- Файлы текстур -->
 		<ItemGroup>
-			<TextureFiles Include="Textures\**\*.*" />
+			<TextureFiles Include="Textures\**\*.*" Exclude="Textures\**\*.svg" />
 		</ItemGroup>
 		<Copy SourceFiles="@(TextureFiles)" DestinationFiles="@(TextureFiles->'$(ModFolder)\Textures\%(RecursiveDir)%(Filename)%(Extension)')" />
 	</Target>

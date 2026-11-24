@@ -33,14 +33,28 @@
 	<description>
 		<![CDATA[
 Adds a wearable extinguisher drone pack-station.
+- Crafted at the fabrication bench using plasteel and advanced components after researching Firefoam, Hunter drones, and Fabrication.
 - Deploys an extinguisher drone when fire is detected near the wearer. Manual deployment to a target location is also available.
 - Equipped with a built-in micro-fabricator that assembles new extinguisher drones from industrial components (4 per drone).
-- Crafted at the fabrication bench using plasteel and advanced components after researching Firefoam, Hunter drones, and Fabrication.
+- Reloading prioritizes industrial components from the wearer's inventory before searching stockpiles.
+- Supports toggling auto-reload per pack, plus manual reload commands.
+
+Mod settings:
+- Fire detection radius and drone fabrication time.
+- Auto-reload on newly created packs (enabled by default).
+- Auto-reload while drafted using components from inventory without leaving position (disabled by default).
 
 Добавляет носимый ранец-станцию для дрона-огнетушителя.
+- Создаётся на высокоточном станке из пластали и продвинутых компонентов после изучения технологий «Пожарная пена», «Дроны-охотники» и «Высокоточное производство».
 - Запускает дрон-огнетушитель при выявлении пожара возле местоположения носителя. Возможен запуск дрона в указанную точку.
 - Оснащён встроенным микрофабрикатором, который собирает новых дронов-огнетушителей из промышленных компонентов (4 шт. на перезарядку).
-- Создаётся на высокоточном станке из пластали и продвинутых компонентов после изучения технологий «Пожарная пена», «Дроны-охотники» и «Высокоточное производство».
+- При перезарядке в первую очередь используются промышленные компоненты из инвентаря носителя, и только при их нехватке — со склада.
+- Поддерживается переключение автоперезарядки для каждого ранца, а также ручной приказ на перезарядку.
+
+Настройки мода:
+- Радиус обнаружения огня и время сборки дрона.
+- Автоперезарядка для новых ранцев (по умолчанию включена).
+- Автоперезарядка в режиме призыва - из инвентаря, не покидая позиции (по умолчанию выключена).
 
 -----------------------------------------
 Supported Languages:
