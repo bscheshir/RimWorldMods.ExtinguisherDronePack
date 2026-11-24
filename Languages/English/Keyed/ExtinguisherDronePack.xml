@@ -20,6 +20,7 @@
 
 	<ExtinguisherPack.ManualDeploy>Deploy extinguisher drone</ExtinguisherPack.ManualDeploy>
 	<ExtinguisherPack.ManualDeploy.Desc>Launch an extinguisher drone capsule to the target location to put out fires.</ExtinguisherPack.ManualDeploy.Desc>
-	<ExtinguisherPack.ChargeNoun>drone</ExtinguisherPack.ChargeNoun>
+	
+	<ExtinguisherPack.TipCharges>Extinguisher drones remaining: {0} / {1}</ExtinguisherPack.TipCharges>
 
 </LanguageData>

@@ -20,6 +20,7 @@
 
 	<ExtinguisherPack.ManualDeploy>Выпустить дрон-огнетушитель</ExtinguisherPack.ManualDeploy>
 	<ExtinguisherPack.ManualDeploy.Desc>Запустить капсулу с дроном-огнетушителем в указанную точку для тушения пожара.</ExtinguisherPack.ManualDeploy.Desc>
-	<ExtinguisherPack.ChargeNoun>дрон</ExtinguisherPack.ChargeNoun>
+	
+	<ExtinguisherPack.TipCharges>Осталось дронов-огнетушителей: {0} / {1}</ExtinguisherPack.TipCharges>
 
 </LanguageData>
