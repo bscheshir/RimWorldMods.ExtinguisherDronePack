@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-	<ExtinguisherPack.AutoDeploy>Auto-deploy drone</ExtinguisherPack.AutoDeploy>
-	<ExtinguisherPack.AutoDeploy.Desc>When enabled, the pack automatically deploys an extinguisher drone if fire is detected within a {0}-cell radius around the wearer.</ExtinguisherPack.AutoDeploy.Desc>
-
-	<ExtinguisherPack.AutoReload>Auto-reload</ExtinguisherPack.AutoReload>
-	<ExtinguisherPack.AutoReload.Desc>When enabled, colonists will automatically reload this pack with industrial components when it is empty.</ExtinguisherPack.AutoReload.Desc>
-
-	<ExtinguisherPack.FabricatingDisabled>Assembling extinguisher drone ({0}s remaining).</ExtinguisherPack.FabricatingDisabled>
-
-	<ExtinguisherPack.Settings.DetectRadius>Auto-deploy fire detection radius: {0} cells</ExtinguisherPack.Settings.DetectRadius>
-	<ExtinguisherPack.Settings.FabricationTime>Drone assembly time after reload: {0}s</ExtinguisherPack.Settings.FabricationTime>
-	<ExtinguisherPack.Settings.DefaultAutoReload>Enable auto-reload by default</ExtinguisherPack.Settings.DefaultAutoReload>
-	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>Determines whether newly crafted or spawned extinguisher packs have auto-reload enabled by default.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
-
-	<ExtinguisherPack.ManualReload>Reload pack</ExtinguisherPack.ManualReload>
-	<ExtinguisherPack.ManualReload.Desc>Order the wearer to find industrial components and reload the extinguisher pack.</ExtinguisherPack.ManualReload.Desc>
-	<ExtinguisherPack.NoAmmo>Not enough {0} available to reload the extinguisher pack.</ExtinguisherPack.NoAmmo>
+	<ExtinguisherPack.SettingsTitle>Extinguisher Drone Pack</ExtinguisherPack.SettingsTitle>
+	<ExtinguisherPack.Settings.DetectRadius>Fire detection radius: {0} cells</ExtinguisherPack.Settings.DetectRadius>
+	<ExtinguisherPack.Settings.FabricationTime>Drone fabrication time: {0}s</ExtinguisherPack.Settings.FabricationTime>
+	<ExtinguisherPack.Settings.DefaultAutoReload>Enable auto-reload by default on new packs</ExtinguisherPack.Settings.DefaultAutoReload>
+	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>If enabled, automatic reloading will be turned on by default for new packs.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
+	<ExtinguisherPack.Settings.AutoReloadWhenDrafted>Reload while drafted (only if components are in inventory)</ExtinguisherPack.Settings.AutoReloadWhenDrafted>
+	<ExtinguisherPack.Settings.AutoReloadWhenDrafted.Desc>If enabled, drafted colonists will automatically reload the pack during idle moments, but only if they have enough industrial components in their inventory (they will not leave their position to visit a stockpile).</ExtinguisherPack.Settings.AutoReloadWhenDrafted.Desc>
+	<ExtinguisherPack.Settings.Reset>Reset to default</ExtinguisherPack.Settings.Reset>
 
 	<ExtinguisherPack.ManualDeploy>Deploy extinguisher drone</ExtinguisherPack.ManualDeploy>
-	<ExtinguisherPack.ManualDeploy.Desc>Launch an extinguisher drone capsule to the target location to put out fires.</ExtinguisherPack.ManualDeploy.Desc>
-	
+	<ExtinguisherPack.ManualDeploy.Desc>Launch an extinguisher drone capsule to the target location to extinguish a fire.</ExtinguisherPack.ManualDeploy.Desc>
+
+	<ExtinguisherPack.AutoDeploy>Auto-deploy drone</ExtinguisherPack.AutoDeploy>
+	<ExtinguisherPack.AutoDeploy.Desc>Toggle automatic deployment of the extinguisher drone when fire is detected within {0} cells.</ExtinguisherPack.AutoDeploy.Desc>
+
+	<ExtinguisherPack.AutoReload>Auto-reload pack</ExtinguisherPack.AutoReload>
+	<ExtinguisherPack.AutoReload.Desc>Toggle automatic reloading of the pack with industrial components.</ExtinguisherPack.AutoReload.Desc>
+	<ExtinguisherPack.AutoReload.DescOnPeace>Auto-reload is ON: the wearer will automatically reload the pack when undrafted.</ExtinguisherPack.AutoReload.DescOnPeace>
+	<ExtinguisherPack.AutoReload.DescOnCombat>Auto-reload is ON: the wearer will reload the pack (while drafted, only if components are in inventory).</ExtinguisherPack.AutoReload.DescOnCombat>
+	<ExtinguisherPack.AutoReload.DescOff>Auto-reload is OFF: the wearer will only reload the pack on command.</ExtinguisherPack.AutoReload.DescOff>
+
+	<ExtinguisherPack.ManualReload>Reload pack</ExtinguisherPack.ManualReload>
+	<ExtinguisherPack.ManualReload.Desc>Order the wearer to find industrial components and reload the pack.</ExtinguisherPack.ManualReload.Desc>
+	<ExtinguisherPack.NoAmmo>Not enough resources ({0}) to reload the pack.</ExtinguisherPack.NoAmmo>
+
+	<ExtinguisherPack.FabricatingDisabled>Fabricating drone ({0}s left)</ExtinguisherPack.FabricatingDisabled>
+	<ExtinguisherPack.InspectFabricating>Fabricating extinguisher drone: {0}s remaining</ExtinguisherPack.InspectFabricating>
+
 	<ExtinguisherPack.TipCharges>Extinguisher drones remaining: {0} / {1}</ExtinguisherPack.TipCharges>
 
 </LanguageData>

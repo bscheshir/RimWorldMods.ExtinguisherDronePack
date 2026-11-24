@@ -67,32 +67,44 @@ namespace ExtinguisherDronePack
         {
             Fabricator.Tick(ChargedComp);
 
-            if (!autoDeployEnabled || IsFabricating)
-                return;
-
             if (wearer == null || !wearer.Spawned || wearer.Map == null || wearer.Dead || wearer.Downed)
                 return;
 
             if (!wearer.IsHashIntervalTick(Props.checkInterval))
                 return;
 
-            if (Find.TickManager.TicksGame - lastAutoDeployTick < ExtinguisherDronePackSettings.AutoDeployCooldownTicks)
-                return;
-
-            if (ChargedComp == null || ChargedComp.RemainingCharges <= 0)
-                return;
-
-            float radius = CurrentDetectRadius;
-            if (FireDroneDeployer.HasActiveDroneNearby(wearer.Position, wearer.Map, radius, Props.droneKind))
-                return;
-
-            Thing triggerFire = FireDroneDeployer.FindFireNearby(wearer.Position, wearer.Map, radius);
-            if (triggerFire != null)
+            if (autoDeployEnabled
+                && !IsFabricating
+                && Find.TickManager.TicksGame - lastAutoDeployTick >= ExtinguisherDronePackSettings.AutoDeployCooldownTicks
+                && ChargedComp != null
+                && ChargedComp.RemainingCharges > 0)
             {
-                ChargedComp.UsedOnce();
-                lastAutoDeployTick = Find.TickManager.TicksGame;
-                Fabricator.NotifyGraphicsChanged();
-                FireDroneDeployer.SpawnNearWearer(wearer, Props.droneKind, triggerFire);
+                float radius = CurrentDetectRadius;
+                if (!FireDroneDeployer.HasActiveDroneNearby(wearer.Position, wearer.Map, radius, Props.droneKind))
+                {
+                    Thing triggerFire = FireDroneDeployer.FindFireNearby(wearer.Position, wearer.Map, radius);
+                    if (triggerFire != null)
+                    {
+                        ChargedComp.UsedOnce();
+                        lastAutoDeployTick = Find.TickManager.TicksGame;
+                        Fabricator.NotifyGraphicsChanged();
+                        FireDroneDeployer.SpawnNearWearer(wearer, Props.droneKind, triggerFire);
+                        return;
+                    }
+                }
+            }
+
+            if (autoReloadEnabled
+                && (ExtinguisherDronePackMod.Settings?.autoReloadWhenDrafted ?? false)
+                && wearer.Drafted
+                && !IsFabricating
+                && ChargedComp != null
+                && ChargedComp.NeedsReload(false)
+                && wearer.CurJobDef != JobDefOf.Reload
+                && !wearer.pather.Moving
+                && wearer.stances?.FullBodyBusy != true)
+            {
+                ExtinguisherPackReloader.OrderManualReload(wearer, ChargedComp, silent: true, inventoryOnly: true);
             }
         }
 
@@ -123,10 +135,17 @@ namespace ExtinguisherDronePack
                 }
             };
 
+            bool reloadInCombat = ExtinguisherDronePackMod.Settings?.autoReloadWhenDrafted ?? false;
+            string autoReloadDesc = autoReloadEnabled
+                ? (reloadInCombat
+                    ? "ExtinguisherPack.AutoReload.DescOnCombat".Translate()
+                    : "ExtinguisherPack.AutoReload.DescOnPeace".Translate())
+                : "ExtinguisherPack.AutoReload.DescOff".Translate();
+
             yield return new Command_Toggle
             {
                 defaultLabel = "ExtinguisherPack.AutoReload".Translate(),
-                defaultDesc = "ExtinguisherPack.AutoReload.Desc".Translate(),
+                defaultDesc = autoReloadDesc,
                 icon = ExtinguisherDronePackAssets.IconAutoReload,
                 isActive = () => autoReloadEnabled,
                 toggleAction = () => autoReloadEnabled = !autoReloadEnabled
@@ -142,7 +161,6 @@ namespace ExtinguisherDronePack
                     action = () => ExtinguisherPackReloader.OrderManualReload(wearer, ChargedComp)
                 };
             }
-
         }
     }
 }

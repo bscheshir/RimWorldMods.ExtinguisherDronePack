@@ -21,8 +21,6 @@ namespace ExtinguisherDronePack
             List<Thing> result = new List<Thing>();
             int collected = 0;
 
-            // 1. Сначала достаём нужное количество из личного инвентаря пешки на её клетку,
-            // чтобы штатный JobDriver_Reload мог зарезервировать и подобрать их без ошибки.
             var inv = wearer.inventory?.innerContainer;
             if (inv != null && wearer.Spawned && wearer.Map != null)
             {
@@ -42,7 +40,6 @@ namespace ExtinguisherDronePack
                 }
             }
 
-            // 2. Если в инвентаре не хватило — добавляем найденное на складах/карте
             if (collected < needed && !mapAmmo.NullOrEmpty())
             {
                 for (int i = 0; i < mapAmmo.Count && collected < needed; i++)
@@ -59,21 +56,27 @@ namespace ExtinguisherDronePack
             return collected >= reloadable.MinAmmoNeeded(true) ? result : null;
         }
 
-        public static void OrderManualReload(Pawn wearer, CompApparelReloadable reloadable)
+        public static void OrderManualReload(Pawn wearer, CompApparelReloadable reloadable, bool silent = false, bool inventoryOnly = false)
         {
-            if (wearer == null || reloadable == null || wearer.Map == null)
+            if (wearer == null || reloadable == null)
                 return;
 
-            List<Thing> mapAmmo = ReloadableUtility.FindEnoughAmmo(wearer, wearer.Position, reloadable, false);
+            List<Thing> mapAmmo = (!inventoryOnly && wearer.Map != null)
+                ? ReloadableUtility.FindEnoughAmmo(wearer, wearer.Position, reloadable, false)
+                : null;
+
             List<Thing> ammo = PrepareAmmoWithInventoryPriority(wearer, reloadable, mapAmmo);
             if (ammo.NullOrEmpty())
             {
-                Messages.Message(
-                    "ExtinguisherPack.NoAmmo".Translate(reloadable.Props.ammoDef.label),
-                    wearer,
-                    MessageTypeDefOf.RejectInput,
-                    historical: false
-                );
+                if (!silent)
+                {
+                    Messages.Message(
+                        "ExtinguisherPack.NoAmmo".Translate(reloadable.Props.ammoDef.label),
+                        wearer,
+                        MessageTypeDefOf.RejectInput,
+                        historical: false
+                    );
+                }
                 return;
             }
 

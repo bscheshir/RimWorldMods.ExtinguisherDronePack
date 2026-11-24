@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-	<ExtinguisherPack.AutoDeploy>Автозапуск дрона</ExtinguisherPack.AutoDeploy>
-	<ExtinguisherPack.AutoDeploy.Desc>Если включено, ранец автоматически запускает дрон-огнетушитель при обнаружении огня в радиусе {0} клеток вокруг носителя.</ExtinguisherPack.AutoDeploy.Desc>
-
-	<ExtinguisherPack.AutoReload>Автоперезарядка</ExtinguisherPack.AutoReload>
-	<ExtinguisherPack.AutoReload.Desc>Если включено, колонисты будут автоматически перезаряжать этот ранец промышленными компонентами, когда заряд закончится.</ExtinguisherPack.AutoReload.Desc>
-
-	<ExtinguisherPack.FabricatingDisabled>Идёт сборка дрона-огнетушителя (осталось {0} сек.).</ExtinguisherPack.FabricatingDisabled>
-
-	<ExtinguisherPack.Settings.DetectRadius>Радиус обнаружения пожара для автозапуска: {0} кл.</ExtinguisherPack.Settings.DetectRadius>
-	<ExtinguisherPack.Settings.FabricationTime>Время сборки дрона после загрузки компонентов: {0} сек.</ExtinguisherPack.Settings.FabricationTime>
-	<ExtinguisherPack.Settings.DefaultAutoReload>Автоперезарядка включена по умолчанию</ExtinguisherPack.Settings.DefaultAutoReload>
-	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>Определяет, будет ли у новых ранцев изначально включена автоматическая перезарядка.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
-
-	<ExtinguisherPack.ManualReload>Перезарядить ранец</ExtinguisherPack.ManualReload>
-	<ExtinguisherPack.ManualReload.Desc>Приказать носителю найти промышленные компоненты на складах и перезарядить ранец.</ExtinguisherPack.ManualReload.Desc>
-	<ExtinguisherPack.NoAmmo>Недостаточно ресурсов ({0}) для перезарядки ранца.</ExtinguisherPack.NoAmmo>
+	<ExtinguisherPack.SettingsTitle>Ранец дрона-огнетушителя</ExtinguisherPack.SettingsTitle>
+	<ExtinguisherPack.Settings.DetectRadius>Радиус обнаружения огня: {0} кл.</ExtinguisherPack.Settings.DetectRadius>
+	<ExtinguisherPack.Settings.FabricationTime>Время сборки дрона: {0} с</ExtinguisherPack.Settings.FabricationTime>
+	<ExtinguisherPack.Settings.DefaultAutoReload>Автоперезарядка включена по умолчанию для новых ранцев</ExtinguisherPack.Settings.DefaultAutoReload>
+	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>Если включено, у новых ранцев автоматическая перезарядка будет включена по умолчанию.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
+	<ExtinguisherPack.Settings.AutoReloadWhenDrafted>Перезаряжать в режиме призыва (только при наличии компонентов в инвентаре)</ExtinguisherPack.Settings.AutoReloadWhenDrafted>
+	<ExtinguisherPack.Settings.AutoReloadWhenDrafted.Desc>Если включено, призванные колонисты будут автоматически перезаряжать ранец в свободные моменты, но только если у них в инвентаре достаточно промышленных компонентов (они не побегут на склад с позиции).</ExtinguisherPack.Settings.AutoReloadWhenDrafted.Desc>
+	<ExtinguisherPack.Settings.Reset>Сбросить по умолчанию</ExtinguisherPack.Settings.Reset>
 
 	<ExtinguisherPack.ManualDeploy>Выпустить дрон-огнетушитель</ExtinguisherPack.ManualDeploy>
 	<ExtinguisherPack.ManualDeploy.Desc>Запустить капсулу с дроном-огнетушителем в указанную точку для тушения пожара.</ExtinguisherPack.ManualDeploy.Desc>
-	
+
+	<ExtinguisherPack.AutoDeploy>Автозапуск дрона</ExtinguisherPack.AutoDeploy>
+	<ExtinguisherPack.AutoDeploy.Desc>Включить или выключить автоматический запуск дрона-огнетушителя при обнаружении пожара в радиусе {0} кл.</ExtinguisherPack.AutoDeploy.Desc>
+
+	<ExtinguisherPack.AutoReload>Автоперезарядка ранца</ExtinguisherPack.AutoReload>
+	<ExtinguisherPack.AutoReload.Desc>Включить или выключить автоматическую перезарядку ранца промышленными компонентами.</ExtinguisherPack.AutoReload.Desc>
+	<ExtinguisherPack.AutoReload.DescOnPeace>Автоперезарядка ВКЛЮЧЕНА: носитель будет автоматически перезаряжать ранец вне режима призыва.</ExtinguisherPack.AutoReload.DescOnPeace>
+	<ExtinguisherPack.AutoReload.DescOnCombat>Автоперезарядка ВКЛЮЧЕНА: носитель будет перезаряжать ранец (в режиме призыва - только если в инвентаре есть компоненты).</ExtinguisherPack.AutoReload.DescOnCombat>
+	<ExtinguisherPack.AutoReload.DescOff>Автоперезарядка ВЫКЛЮЧЕНА: носитель будет перезаряжать ранец только по приказу.</ExtinguisherPack.AutoReload.DescOff>
+
+	<ExtinguisherPack.ManualReload>Перезарядить ранец</ExtinguisherPack.ManualReload>
+	<ExtinguisherPack.ManualReload.Desc>Приказать носителю найти промышленные компоненты и перезарядить ранец.</ExtinguisherPack.ManualReload.Desc>
+	<ExtinguisherPack.NoAmmo>Недостаточно ресурсов ({0}) для перезарядки ранца.</ExtinguisherPack.NoAmmo>
+
+	<ExtinguisherPack.FabricatingDisabled>Сборка дрона (осталось {0} с)</ExtinguisherPack.FabricatingDisabled>
+	<ExtinguisherPack.InspectFabricating>Сборка дрона-огнетушителя: осталось {0} с</ExtinguisherPack.InspectFabricating>
+
 	<ExtinguisherPack.TipCharges>Осталось дронов-огнетушителей: {0} / {1}</ExtinguisherPack.TipCharges>
 
 </LanguageData>
