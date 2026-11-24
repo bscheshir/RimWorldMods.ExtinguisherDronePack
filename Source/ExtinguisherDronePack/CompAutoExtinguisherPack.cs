@@ -139,7 +139,7 @@ namespace ExtinguisherDronePack
                     defaultLabel = "ExtinguisherPack.ManualReload".Translate(),
                     defaultDesc = "ExtinguisherPack.ManualReload.Desc".Translate(),
                     icon = ThingDefOf.ComponentIndustrial.uiIcon,
-                    action = () => FireDroneDeployer.OrderManualReload(wearer, ChargedComp)
+                    action = () => ExtinguisherPackReloader.OrderManualReload(wearer, ChargedComp)
                 };
             }
 

@@ -34,8 +34,8 @@ namespace ExtinguisherDronePack
         {
             if (__instance is Command_VerbTarget verbCmd && verbCmd.verb is Verb_LaunchProjectileExtinguisherPack)
             {
-                verbCmd.defaultDesc = "ExtinguisherPack.ManualDeploy.Desc".Translate();
                 verbCmd.defaultLabel = "ExtinguisherPack.ManualDeploy".Translate();
+                verbCmd.defaultDesc = "ExtinguisherPack.ManualDeploy.Desc".Translate();
             }
         }
 
@@ -109,8 +109,6 @@ namespace ExtinguisherDronePack
                 var autoComp = worn[i].GetComp<CompAutoExtinguisherPack>();
                 if (autoComp != null && !autoComp.AutoReloadEnabled)
                 {
-                    // Если у пешки надет наш пустой ранец с выключенной автоперезарядкой,
-                    // проверяем, есть ли у неё другие вещи для автоперезарядки; если нет — отменяем авто-задачу.
                     var reloadable = worn[i].GetComp<CompApparelReloadable>();
                     if (reloadable != null && reloadable.NeedsReload(false) && !HasOtherReloadable(pawn, worn[i]))
                     {
@@ -121,6 +119,42 @@ namespace ExtinguisherDronePack
             }
 
             return true;
+        }
+
+        public static void Postfix(Pawn pawn, Job __result)
+        {
+            if (__result == null || __result.def != JobDefOf.Reload)
+                return;
+
+            var packThing = __result.targetA.Thing;
+            if (packThing == null || packThing.TryGetComp<CompAutoExtinguisherPack>() == null)
+                return;
+
+            var reloadable = packThing.TryGetComp<CompApparelReloadable>();
+            if (reloadable == null || pawn?.inventory?.innerContainer == null)
+                return;
+
+            List<Thing> currentQueue = new List<Thing>();
+            if (__result.targetQueueB != null)
+            {
+                for (int i = 0; i < __result.targetQueueB.Count; i++)
+                {
+                    if (__result.targetQueueB[i].Thing != null)
+                    {
+                        currentQueue.Add(__result.targetQueueB[i].Thing);
+                    }
+                }
+            }
+
+            List<Thing> prioritized = ExtinguisherPackReloader.PrepareAmmoWithInventoryPriority(pawn, reloadable, currentQueue);
+            if (!prioritized.NullOrEmpty())
+            {
+                __result.targetQueueB = new List<LocalTargetInfo>(prioritized.Count);
+                for (int i = 0; i < prioritized.Count; i++)
+                {
+                    __result.targetQueueB.Add(prioritized[i]);
+                }
+            }
         }
 
         private static bool HasOtherReloadable(Pawn pawn, Apparel excluded)
