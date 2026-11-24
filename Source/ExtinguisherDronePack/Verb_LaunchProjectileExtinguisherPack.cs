@@ -33,17 +33,26 @@ namespace ExtinguisherDronePack
             return null;
         }
 
+        public CompAutoExtinguisherPack FindAutoComp()
+        {
+            return FindPackComp()?.parent?.GetComp<CompAutoExtinguisherPack>();
+        }
+
         protected override bool TryCastShot()
         {
             var reloadable = FindPackComp();
-            if (reloadable != null && !reloadable.CanBeUsed(out _))
+            if (reloadable == null || !reloadable.CanBeUsed(out _))
+                return false;
+
+            var autoComp = reloadable.parent?.GetComp<CompAutoExtinguisherPack>();
+            if (autoComp != null && autoComp.IsFabricating)
                 return false;
 
             bool result = base.TryCastShot();
-            if (result && reloadable != null)
+            if (result)
             {
                 reloadable.UsedOnce();
-                reloadable.parent?.GetComp<CompAutoExtinguisherPack>()?.NotifyGraphicsChanged();
+                autoComp?.NotifyGraphicsChanged();
             }
             return result;
         }

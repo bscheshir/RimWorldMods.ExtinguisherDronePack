@@ -30,19 +30,14 @@ namespace ExtinguisherDronePack
     {
         public static readonly Texture2D IconAutoDeploy = ContentFinder<Texture2D>.Get("Things/Pawn/Drone/ExtinguisherDrone/ExtinguisherDrone_east", true);
         public static readonly Texture2D IconAutoReload = ContentFinder<Texture2D>.Get("UI/AutoChargePack", true);
-        public static readonly Texture2D ProgressFillTex = SolidColorMaterials.NewSolidColorTexture(new Color(0.25f, 0.72f, 0.92f, 0.35f));
+        public static readonly Texture2D ProgressFillTex = SolidColorMaterials.NewSolidColorTexture(new Color(0.28f, 0.68f, 0.35f, 0.45f));
 
         public const string PackTexPathEmpty = "HunterDronePack/Apparel_PackHunter_Extinguisher_Empty";
 
-        public static readonly bool HasEmptyWorldTex = ContentFinder<Texture2D>.Get(PackTexPathEmpty, false) != null;
-        public static readonly bool HasEmptyWornTex = ContentFinder<Texture2D>.Get(PackTexPathEmpty + "_north", false) != null
-                                                    || ContentFinder<Texture2D>.Get(PackTexPathEmpty + "_east", false) != null;
-
-        public static readonly Graphic EmptyPackWorldGraphic = HasEmptyWorldTex
+        public static readonly Graphic EmptyPackWorldGraphic = ContentFinder<Texture2D>.Get(PackTexPathEmpty, false) != null
             ? GraphicDatabase.Get<Graphic_Single>(PackTexPathEmpty, ShaderDatabase.Cutout, new Vector2(0.7f, 0.7f), Color.white)
             : null;
     }
-
 
     public class ExtinguisherDronePackSettings : ModSettings
     {

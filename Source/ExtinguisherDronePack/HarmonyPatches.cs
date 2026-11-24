@@ -1,5 +1,6 @@
 using HarmonyLib;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace ExtinguisherDronePack
@@ -20,6 +21,49 @@ namespace ExtinguisherDronePack
                 {
                     autoComp.TickEquipped(__instance);
                 }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Command), nameof(Command.GizmoOnGUI))]
+    public static class Patch_Command_GizmoOnGUI
+    {
+        public static void Postfix(Command __instance, Vector2 topLeft, float maxWidth)
+        {
+            if (__instance is Command_VerbTarget verbCmd && verbCmd.verb is Verb_LaunchProjectileExtinguisherPack packVerb)
+            {
+                var autoComp = packVerb.FindAutoComp();
+                if (autoComp != null && autoComp.IsFabricating)
+                {
+                    float width = __instance.GetWidth(maxWidth);
+                    Rect rect = new Rect(topLeft.x, topLeft.y, width, Gizmo.Height);
+
+                    float fillWidth = rect.width * autoComp.FabricationProgress;
+                    Rect fillRect = new Rect(rect.x, rect.y, fillWidth, rect.height);
+                    GUI.DrawTexture(fillRect, ExtinguisherDronePackAssets.ProgressFillTex);
+
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    Text.Font = GameFont.Small;
+                    Widgets.Label(rect, autoComp.FabricationSecondsLeft.ToString("0.0") + " " + "LetterSecond".Translate());
+                    Text.Anchor = TextAnchor.UpperLeft;
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(CompApparelReloadable), nameof(CompApparelReloadable.CanBeUsed))]
+    public static class Patch_CompApparelReloadable_CanBeUsed
+    {
+        public static void Postfix(CompApparelReloadable __instance, ref string reason, ref bool __result)
+        {
+            if (!__result)
+                return;
+
+            var autoComp = __instance.parent?.GetComp<CompAutoExtinguisherPack>();
+            if (autoComp != null && autoComp.IsFabricating)
+            {
+                __result = false;
+                reason = "ExtinguisherPack.FabricatingDisabled".Translate(autoComp.FabricationSecondsLeft.ToString("0.0"));
             }
         }
     }
@@ -84,7 +128,7 @@ namespace ExtinguisherDronePack
         public static void Prefix(Apparel apparel, ref string __state)
         {
             var autoComp = apparel?.GetComp<CompAutoExtinguisherPack>();
-            if (autoComp != null && autoComp.IsVisuallyEmpty)
+            if (autoComp != null && autoComp.IsVisuallyEmpty && ExtinguisherDronePackAssets.EmptyPackWorldGraphic != null)
             {
                 __state = apparel.def.apparel.wornGraphicPath;
                 apparel.def.apparel.wornGraphicPath = ExtinguisherDronePackAssets.PackTexPathEmpty;

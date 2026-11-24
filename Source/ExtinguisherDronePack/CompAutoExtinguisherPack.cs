@@ -101,19 +101,6 @@ namespace ExtinguisherDronePack
 
         public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
         {
-            foreach (var gizmo in base.CompGetWornGizmosExtra())
-            {
-                if (IsFabricating && gizmo is Command_VerbTarget verbCmd)
-                {
-                    verbCmd.Disable("ExtinguisherPack.FabricatingDisabled".Translate(FabricationSecondsLeft.ToString("0.0")));
-                    yield return new Gizmo_FabricatingVerbWrapper(verbCmd, this);
-                }
-                else
-                {
-                    yield return gizmo;
-                }
-            }
-
             var wearer = (parent as Apparel)?.Wearer;
             if (wearer == null || !wearer.IsColonistPlayerControlled)
                 yield break;
