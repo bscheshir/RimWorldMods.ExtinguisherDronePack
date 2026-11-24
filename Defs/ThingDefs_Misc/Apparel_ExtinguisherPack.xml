@@ -123,7 +123,6 @@
 				<ammoDef>ComponentIndustrial</ammoDef>
 				<ammoCountPerCharge>4</ammoCountPerCharge>
 				<destroyOnEmpty>false</destroyOnEmpty>
-				<chargeNoun>drone</chargeNoun>
 			</li>
 			<li Class="ExtinguisherDronePack.CompProperties_AutoExtinguisherPack">
 				<detectRadius>12.9</detectRadius>

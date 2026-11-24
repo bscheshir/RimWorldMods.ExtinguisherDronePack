@@ -3,8 +3,6 @@
 
 	<Apparel_PackExtinguisher.label>ранец дрона-огнетушителя</Apparel_PackExtinguisher.label>
 	<Apparel_PackExtinguisher.description>Высокотехнологичный носимый ранец-станция со встроенным микрофабрикатором для сборки дронов-огнетушителей. Автоматически запускает дрона при выявлении пожара возле носителя, а также позволяет вручную запустить дрона в указанную точку. Перезаряжается промышленными компонентами.</Apparel_PackExtinguisher.description>
-	<Apparel_PackExtinguisher.comps.CompProperties_ApparelReloadable.chargeNoun>дронов</Apparel_PackExtinguisher.comps.CompProperties_ApparelReloadable.chargeNoun>
-	<Apparel_PackExtinguisher.verbs.0.label>выпустить дрон-огнетушитель</Apparel_PackExtinguisher.verbs.0.label>
 
 	<Grenade_ExtinguisherPack.label>капсула дрона-огнетушителя</Grenade_ExtinguisherPack.label>
 

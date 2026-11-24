@@ -131,6 +131,18 @@ namespace ExtinguisherDronePack
                 isActive = () => autoReloadEnabled,
                 toggleAction = () => autoReloadEnabled = !autoReloadEnabled
             };
+
+            if (ChargedComp != null && ChargedComp.RemainingCharges <= 0 && !IsFabricating)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "ExtinguisherPack.ManualReload".Translate(),
+                    defaultDesc = "ExtinguisherPack.ManualReload.Desc".Translate(),
+                    icon = ThingDefOf.ComponentIndustrial.uiIcon,
+                    action = () => FireDroneDeployer.OrderManualReload(wearer, ChargedComp)
+                };
+            }
+
         }
     }
 }

@@ -14,4 +14,12 @@
 	<ExtinguisherPack.Settings.DefaultAutoReload>Enable auto-reload by default</ExtinguisherPack.Settings.DefaultAutoReload>
 	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>Determines whether newly crafted or spawned extinguisher packs have auto-reload enabled by default.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
 
+	<ExtinguisherPack.ManualReload>Reload pack</ExtinguisherPack.ManualReload>
+	<ExtinguisherPack.ManualReload.Desc>Order the wearer to find industrial components and reload the extinguisher pack.</ExtinguisherPack.ManualReload.Desc>
+	<ExtinguisherPack.NoAmmo>Not enough {0} available to reload the extinguisher pack.</ExtinguisherPack.NoAmmo>
+
+	<ExtinguisherPack.ManualDeploy>Deploy extinguisher drone</ExtinguisherPack.ManualDeploy>
+	<ExtinguisherPack.ManualDeploy.Desc>Launch an extinguisher drone capsule to the target location to put out fires.</ExtinguisherPack.ManualDeploy.Desc>
+	<ExtinguisherPack.ChargeNoun>drone</ExtinguisherPack.ChargeNoun>
+
 </LanguageData>

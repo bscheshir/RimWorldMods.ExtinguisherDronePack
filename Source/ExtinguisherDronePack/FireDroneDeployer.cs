@@ -1,5 +1,8 @@
 using RimWorld;
+using RimWorld.Utility;
+using System.Collections.Generic;
 using Verse;
+using Verse.AI;
 
 namespace ExtinguisherDronePack
 {
@@ -77,5 +80,33 @@ namespace ExtinguisherDronePack
             ExtinguisherDroneInterop.ConfigureDroneForBackpack(drone, triggerFire);
             EffecterDefOf.Skip_EntryNoDelay?.Spawn(spawnCell, wearer.Map)?.Cleanup();
         }
+
+        public static void OrderManualReload(Pawn wearer, CompApparelReloadable reloadable)
+        {
+            if (wearer == null || reloadable == null || wearer.Map == null)
+                return;
+
+            List<Thing> ammo = ReloadableUtility.FindEnoughAmmo(wearer, wearer.Position, reloadable, false);
+            if (ammo.NullOrEmpty())
+            {
+                Messages.Message(
+                    "ExtinguisherPack.NoAmmo".Translate(reloadable.Props.ammoDef.label),
+                    wearer,
+                    MessageTypeDefOf.RejectInput,
+                    historical: false
+                );
+                return;
+            }
+
+            Job job = JobMaker.MakeJob(JobDefOf.Reload, reloadable.parent);
+            job.targetQueueB = new List<LocalTargetInfo>(ammo.Count);
+            for (int i = 0; i < ammo.Count; i++)
+            {
+                job.targetQueueB.Add(ammo[i]);
+            }
+            job.count = reloadable.MaxAmmoNeeded(true);
+            wearer.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+        }
+
     }
 }

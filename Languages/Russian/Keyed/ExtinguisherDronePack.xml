@@ -14,4 +14,12 @@
 	<ExtinguisherPack.Settings.DefaultAutoReload>Автоперезарядка включена по умолчанию</ExtinguisherPack.Settings.DefaultAutoReload>
 	<ExtinguisherPack.Settings.DefaultAutoReload.Desc>Определяет, будет ли у новых ранцев изначально включена автоматическая перезарядка.</ExtinguisherPack.Settings.DefaultAutoReload.Desc>
 
+	<ExtinguisherPack.ManualReload>Перезарядить ранец</ExtinguisherPack.ManualReload>
+	<ExtinguisherPack.ManualReload.Desc>Приказать носителю найти промышленные компоненты на складах и перезарядить ранец.</ExtinguisherPack.ManualReload.Desc>
+	<ExtinguisherPack.NoAmmo>Недостаточно ресурсов ({0}) для перезарядки ранца.</ExtinguisherPack.NoAmmo>
+
+	<ExtinguisherPack.ManualDeploy>Выпустить дрон-огнетушитель</ExtinguisherPack.ManualDeploy>
+	<ExtinguisherPack.ManualDeploy.Desc>Запустить капсулу с дроном-огнетушителем в указанную точку для тушения пожара.</ExtinguisherPack.ManualDeploy.Desc>
+	<ExtinguisherPack.ChargeNoun>дрон</ExtinguisherPack.ChargeNoun>
+
 </LanguageData>

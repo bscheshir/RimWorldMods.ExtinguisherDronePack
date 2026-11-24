@@ -1,5 +1,6 @@
-using System.Reflection;
 using HarmonyLib;
+using RimWorld;
+using System.Reflection;
 using UnityEngine;
 using Verse;
 
@@ -22,6 +23,13 @@ namespace ExtinguisherDronePack
         {
             var harmony = new Harmony("com.BSCheshir.ExtinguisherDronePack");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+            var packDef = DefDatabase<ThingDef>.GetNamedSilentFail("Apparel_PackExtinguisher");
+            var reloadProps = packDef?.GetCompProperties<CompProperties_ApparelReloadable>();
+            if (reloadProps != null)
+            {
+                reloadProps.chargeNoun = "ExtinguisherPack.ChargeNoun".Translate();
+            }
         }
     }
 

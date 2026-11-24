@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace ExtinguisherDronePack
 {
@@ -28,6 +30,15 @@ namespace ExtinguisherDronePack
     [HarmonyPatch(typeof(Command), nameof(Command.GizmoOnGUI))]
     public static class Patch_Command_GizmoOnGUI
     {
+        public static void Prefix(Command __instance)
+        {
+            if (__instance is Command_VerbTarget verbCmd && verbCmd.verb is Verb_LaunchProjectileExtinguisherPack)
+            {
+                verbCmd.defaultDesc = "ExtinguisherPack.ManualDeploy.Desc".Translate();
+                verbCmd.defaultLabel = "ExtinguisherPack.ManualDeploy".Translate();
+            }
+        }
+
         public static void Postfix(Command __instance, Vector2 topLeft, float maxWidth)
         {
             if (__instance is Command_VerbTarget verbCmd && verbCmd.verb is Verb_LaunchProjectileExtinguisherPack packVerb)
@@ -71,25 +82,60 @@ namespace ExtinguisherDronePack
     [HarmonyPatch(typeof(CompApparelReloadable), nameof(CompApparelReloadable.NeedsReload))]
     public static class Patch_CompApparelReloadable_NeedsReload
     {
-        public static void Postfix(CompApparelReloadable __instance, bool allowForcedReload, ref bool __result)
+        public static void Postfix(CompApparelReloadable __instance, ref bool __result)
         {
             if (!__result)
                 return;
 
             var autoComp = __instance.parent?.GetComp<CompAutoExtinguisherPack>();
-            if (autoComp == null)
-                return;
-
-            if (autoComp.IsFabricating)
-            {
-                __result = false;
-                return;
-            }
-
-            if (!allowForcedReload && !autoComp.AutoReloadEnabled)
+            if (autoComp != null && autoComp.IsFabricating)
             {
                 __result = false;
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(JobGiver_Reload), "TryGiveJob")]
+    public static class Patch_JobGiver_Reload_TryGiveJob
+    {
+        public static bool Prefix(Pawn pawn, ref Job __result)
+        {
+            var worn = pawn?.apparel?.WornApparel;
+            if (worn == null)
+                return true;
+
+            for (int i = 0; i < worn.Count; i++)
+            {
+                var autoComp = worn[i].GetComp<CompAutoExtinguisherPack>();
+                if (autoComp != null && !autoComp.AutoReloadEnabled)
+                {
+                    // Если у пешки надет наш пустой ранец с выключенной автоперезарядкой,
+                    // проверяем, есть ли у неё другие вещи для автоперезарядки; если нет — отменяем авто-задачу.
+                    var reloadable = worn[i].GetComp<CompApparelReloadable>();
+                    if (reloadable != null && reloadable.NeedsReload(false) && !HasOtherReloadable(pawn, worn[i]))
+                    {
+                        __result = null;
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private static bool HasOtherReloadable(Pawn pawn, Apparel excluded)
+        {
+            var worn = pawn.apparel.WornApparel;
+            for (int i = 0; i < worn.Count; i++)
+            {
+                if (worn[i] == excluded)
+                    continue;
+
+                var comp = worn[i].GetComp<CompApparelReloadable>();
+                if (comp != null && comp.NeedsReload(false))
+                    return true;
+            }
+            return false;
         }
     }
 
